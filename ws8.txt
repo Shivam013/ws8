@@ -1,0 +1,48 @@
+Script started on 2022-10-31 17:31:33-04:00
+shivam@sjsu:/mnt/scratch/shivam/ws8[shivam@sjsu ws8]$ history -c
+
+//Get all verified reviews
+shivam@sjsu:/mnt/scratch/shivam/ws8[shivam@sjsu ws8]$ [shivam@sjsu ws8]$ awk -F "\t" '$12 == "Y" {print $0}' amazon_reviews_us_Books_v1_02.tsv > verified.txt
+
+//Get all unverified reviews
+shivam@sjsu:/mnt/scratch/shivam/ws8[shivam@sjsu ws8]$ awk -F "\t" '$12 == "N" {print $0}' amazon_reviews_us_Books_v1_02.tsv > unverified.txt
+
+//Get body of all verified reviews and remove all punctuation
+shivam@sjsu:/mnt/scratch/shivam/ws8[shivam@sjsu ws8]$ cut -f 14 verified.txt | sed "s/\.//g" | sed "s/?//g" | sed "s/\!//g" | sed "s/-/ /g"  | sed "s/)//g" | sed "s/(//g" | sed "s/\\\//g" | sed "s/\"/ /g" | sed "s/'//g" | sed "s/;//g" | sed "s/<<.. *\/*>//g" > verified_body.txt
+
+//Get body of all unverified reviews and remove all punctuation
+shivam@sjsu:/mnt/scratch/shivam/ws8[shivam@sjsu ws8]$ cut -f 14 unverified.txt | sed "s/\.//g" | sed "s/?//g" | sed "s/\!//g" | sed "s/-/ /gg" | sed "s/)//g" | sed "s/(//g" | sed "s/\\\//g" | sed "s/\"/ /g" | sed "s/'//g" | sed "s/;//g" | sed "ss/<.. *\/*>//g" > unverified_body.txt
+
+//Get top 10 words of first 100 verified body after splitting each line by " " to get words on individual line
+shivam@sjsu:/mnt/scratch/shivam/ws8[shivam@sjsu ws8]$ head -n 100 verified_body.txt | sed "s/ /\n/g" | sed "s/ //g"| awk '$0 != "" {print $00}' | sort | uniq -c | sort -nr | head -n 10
+    756 the
+    447 and
+    436 of
+    369 to
+    356 a
+    262 is
+    229 in
+    210 I
+    169 that
+    157 for
+
+//Get top 10 words of first 100 unverified body after splitting each line by " " to get words on individual line
+shivam@sjsu:/mnt/scratch/shivam/ws8[shivam@sjsu ws8]$ head -n 100 unverified_body.txt | sed "s/ /\n/g" | sed "s/ //g"| awk '$0 != "" {print  $0}' | sort | uniq -c | sort -nr | head -n 10
+    854 the
+    508 of
+    506 and
+    451 to
+    385 a
+    312 is
+    262 in
+    234 that
+    222 I
+    174 book
+
+
+shivam@sjsu:/mnt/scratch/shivam/ws8[shivam@sjsu ws8]$ history > cmds.log
+shivam@sjsu:/mnt/scratch/shivam/ws8[shivam@sjsu ws8]$ exit
+
+Script done on 2022-10-31 17:33:03-04:00
+
+
