@@ -1,48 +1,44 @@
-Script started on 2022-10-31 17:31:33-04:00
+Script started on 2022-10-31 17:50:16-04:00
+
 shivam@sjsu:/mnt/scratch/shivam/ws8[shivam@sjsu ws8]$ history -c
 
-//Get all verified reviews
-shivam@sjsu:/mnt/scratch/shivam/ws8[shivam@sjsu ws8]$ [shivam@sjsu ws8]$ awk -F "\t" '$12 == "Y" {print $0}' amazon_reviews_us_Books_v1_02.tsv > verified.txt
+//SEPARATE FILES
 
-//Get all unverified reviews
+shivam@sjsu:/mnt/scratch/shivam/ws8[shivam@sjsu ws8]$ awk -F "\t" '$12 == "Y" {print $0}' amazon_reviews_us_Books_v1_02.tsv > verified.txt
 shivam@sjsu:/mnt/scratch/shivam/ws8[shivam@sjsu ws8]$ awk -F "\t" '$12 == "N" {print $0}' amazon_reviews_us_Books_v1_02.tsv > unverified.txt
 
-//Get body of all verified reviews and remove all punctuation
-shivam@sjsu:/mnt/scratch/shivam/ws8[shivam@sjsu ws8]$ cut -f 14 verified.txt | sed "s/\.//g" | sed "s/?//g" | sed "s/\!//g" | sed "s/-/ /g"  | sed "s/)//g" | sed "s/(//g" | sed "s/\\\//g" | sed "s/\"/ /g" | sed "s/'//g" | sed "s/;//g" | sed "s/<<.. *\/*>//g" > verified_body.txt
+//GET REVIEW BODY AND REMOVE WORDS
+//REMOVED WORDS:
+//AND | OR | IF | IN | IT | ITS | FOR | THE | A | I | WITH | AS | ON | BUT
+shivam@sjsu:/mnt/scratch/shivam/ws8[shivam@sjsu ws8]$ cut -f 14 verified.txt | sed "s/\.//g" | sed "s/?//g" | sed "s/\!//g" | sed "s/-/ /g"  | sed "s/)//g" | sed "s/(//g" | sed "s/\\\//g" | sed "s/\"/ /g" | sed "s/'//g" | sed "s/;//g" | sed "s/  and //g" | sed "s/ or //g" | sed "s/ if //g" | sed "s/ in //g" | sed "s/ it //g" | sed "s/ its //g" | seed "s/ of //g" | sed "s/ to //g" | sed "s/ in //g" | sed "s/ that //g" | sed "s/ this //g" | sed "s/ is ///g" | sed "s/ for //g" | sed "s/ [t|T]he //g" | sed "s/ a //g" | sed "s/ I //g" | sed "s/ with //g" | seed "s/ as //g" | sed "s/ on //g" | sed "s/ but //g" | sed "s/<.. *\/*>//g" > verified_body.txt
+shivam@sjsu:/mnt/scratch/shivam/ws8[shivam@sjsu ws8]$ cut -f 14 unverified.txt | sed "s/\.//g" | sed "s/?//g" | sed "s/\!//g" | sed "s/-/ /gg" | sed "s/)//g" | sed "s/(//g" | sed "s/\\\//g" | sed "s/\"/ /g" | sed "s/'//g" | sed "s/;//g" | sed "ss/ and //g" | sed "s/ or //g" | sed "s/ if //g" | sed "s/ in //g" | sed "s/ it //g" | sed "s/ its //g" |  sed "s/ of //g" | sed "s/ to //g" | sed "s/ in //g" | sed "s/ that //g" | sed "s/ this //g" | sed "s/ iss //g" | sed "s/ for //g" | sed "s/ [t|T]he //g" | sed "s/ a //g" | sed "s/ I //g" | sed "s/ with //g" |  sed "s/ as //g" | sed "s/ on //g" | sed "s/ but //g" | sed "s/<.. *\/*>//g" > unverified_body.txt
 
-//Get body of all unverified reviews and remove all punctuation
-shivam@sjsu:/mnt/scratch/shivam/ws8[shivam@sjsu ws8]$ cut -f 14 unverified.txt | sed "s/\.//g" | sed "s/?//g" | sed "s/\!//g" | sed "s/-/ /gg" | sed "s/)//g" | sed "s/(//g" | sed "s/\\\//g" | sed "s/\"/ /g" | sed "s/'//g" | sed "s/;//g" | sed "ss/<.. *\/*>//g" > unverified_body.txt
-
-//Get top 10 words of first 100 verified body after splitting each line by " " to get words on individual line
+//GET TOP 10 OUT OF FIRST 100 LINES
 shivam@sjsu:/mnt/scratch/shivam/ws8[shivam@sjsu ws8]$ head -n 100 verified_body.txt | sed "s/ /\n/g" | sed "s/ //g"| awk '$0 != "" {print $00}' | sort | uniq -c | sort -nr | head -n 10
-    756 the
-    447 and
-    436 of
-    369 to
-    356 a
-    262 is
-    229 in
-    210 I
-    169 that
-    157 for
-
-//Get top 10 words of first 100 unverified body after splitting each line by " " to get words on individual line
+     98 are
+     61 book
+     58 not
+     53 have
+     48 you
+     46 his
+     46 has
+     43 he
+     41 be
+     38 was
 shivam@sjsu:/mnt/scratch/shivam/ws8[shivam@sjsu ws8]$ head -n 100 unverified_body.txt | sed "s/ /\n/g" | sed "s/ //g"| awk '$0 != "" {print  $0}' | sort | uniq -c | sort -nr | head -n 10
-    854 the
-    508 of
-    506 and
-    451 to
-    385 a
-    312 is
-    262 in
-    234 that
-    222 I
-    174 book
-
-
+     80 are
+     70 you
+     67 not
+     61 book
+     59 was
+     52 her
+     50 will
+     50 have
+     50 by
+     50 about
 shivam@sjsu:/mnt/scratch/shivam/ws8[shivam@sjsu ws8]$ history > cmds.log
 shivam@sjsu:/mnt/scratch/shivam/ws8[shivam@sjsu ws8]$ exit
 
-Script done on 2022-10-31 17:33:03-04:00
+Script done on 2022-10-31 17:52:16-04:00
 
 
